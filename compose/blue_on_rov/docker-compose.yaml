@@ -1,0 +1,27 @@
+version: "3"
+services:
+  blue:
+    image: ghcr.io/${BLUE_GITHUB_REPO:?Github repo not set}:${BLUE_ROS_DISTRO:?BLUE_ROS_DISTRO not set}-robot
+    network_mode: host
+    tty: true
+    stdin_open: true
+    privileged: true
+    environment:
+      ROS_DOMAIN_ID: 0
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp:unconfined
+      - apparmor:unconfined
+    volumes:
+      - /dev:/dev
+      - /run/user/1000:/run/user/1000
+    command: tail -f /dev/null
+
+  zenoh:
+    image: eclipse/zenoh-bridge-ros2dds:latest
+    ports:
+      - 7447:7447
+      - 7448:7448
+    environment:
+      ROS_DOMAIN_ID: 0
