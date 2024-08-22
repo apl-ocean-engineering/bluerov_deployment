@@ -71,5 +71,6 @@
     "**/build": true,
     "**/install": true,
     "**/log": true
-  }
+  },
+  "cmake.configureOnOpen": false
 }

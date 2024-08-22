@@ -62,8 +62,7 @@ def generate_launch_description() -> LaunchDescription:
         ],
     )
 
-
-   # The ISMC expects state information to be provided in the FSD frame
+    # The ISMC expects state information to be provided in the FSD frame
     mobile_to_maritime_pose = Node(
         package="mobile_to_maritime",
         executable="mobile_odometry_to_maritime_multi_dof_command",
@@ -82,7 +81,7 @@ def generate_launch_description() -> LaunchDescription:
         package="controller_manager",
         executable="ros2_control_node",
         output="both",
-        prefix=['xterm -e gdb -ex run --args'],
+        prefix=["xterm -e gdb -ex run --args"],
         parameters=[
             PathJoinSubstitution(
                 [
@@ -119,14 +118,14 @@ def generate_launch_description() -> LaunchDescription:
     )
 
     thruster_spawner = Node(
-            package="controller_manager",
-            executable="spawner",
-            arguments=[
-                f"thruster{i + 1}_controller" for i in range(6)] +
-                ["--controller-manager",
-                ["", "controller_manager"],
-            ],
-        )
+        package="controller_manager",
+        executable="spawner",
+        arguments=[f"thruster{i + 1}_controller" for i in range(6)]
+        + [
+            "--controller-manager",
+            ["", "controller_manager"],
+        ],
+    )
 
     tam_controller_spawner = Node(
         package="controller_manager",
@@ -174,6 +173,6 @@ def generate_launch_description() -> LaunchDescription:
             thruster_spawner,
             delay_tam_controller_spawner_after_thruster_controller_spawners,
             delay_velocity_controller_spawner_after_tam_controller_spawner,
-            delay_heading_controller_spawner_after_ismc_controller_spawner
+            delay_heading_controller_spawner_after_ismc_controller_spawner,
         ]
     )
