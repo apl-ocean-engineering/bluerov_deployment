@@ -1,4 +1,3 @@
-version: "3"
 services:
   blue:
     image: ghcr.io/${BLUE_GITHUB_REPO:?Github repo not set}:${BLUE_ROS_DISTRO:?BLUE_ROS_DISTRO not set}-desktop
@@ -28,5 +27,6 @@ services:
     volumes:
       - /dev:/dev
       - /tmp/.X11-unix:/tmp/.X11-unix
-      - /mnt/wslg:/mnt/wslg
+      - ../../../bluerov_deployment:/home/ubuntu/ws_blue/src/bluerov_deployment
+      - ../../../blue:/home/ubuntu/ws_blue/src/blue
     command: tail -f /dev/null
