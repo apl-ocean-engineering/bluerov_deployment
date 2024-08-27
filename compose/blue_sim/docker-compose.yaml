@@ -8,7 +8,7 @@ services:
       - QT_X11_NO_MITSHM=1
       - WAYLAND_DISPLAY=${WAYLAND_DISPLAY} # Can be commented out if not used
       - PULSE_SERVER=${PULSE_SERVER} # Can be commented out if not used
-    network_mode: host
+    #    network_mode: host
     tty: true
     stdin_open: true
     privileged: true
@@ -24,6 +24,8 @@ services:
       - ../../../auv_controllers:/home/ubuntu/ws_blue/src/auv_controllers
       - ../../../mobile_to_maritime:/home/ubuntu/ws_blue/src/mobile_to_maritime
       - ../../../blue:/home/ubuntu/ws_blue/src/blue
+    networks:
+      - ros2_backend
     # Launch sim directly
     entrypoint: [ "/bin/bash", "-i", "-c" ]
     command: [ "ros2 launch blue_demos bluerov2_demo.launch.yaml use_sim:=true" ]
@@ -32,3 +34,9 @@ services:
     image: ghcr.io/apl-ocean-engineering/blue-foxglove-bridge-docker:${BLUE_ROS_DISTRO}
     ports:
       - 8765:8765
+    networks:
+      - ros2_backend
+
+networks:
+  ros2_backend:
+    external: true
