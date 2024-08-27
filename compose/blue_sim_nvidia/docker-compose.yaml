@@ -28,5 +28,24 @@ services:
       - /dev:/dev
       - /tmp/.X11-unix:/tmp/.X11-unix
       - ../../../bluerov_deployment:/home/ubuntu/ws_blue/src/bluerov_deployment
+      - ../../../auv_controllers:/home/ubuntu/ws_blue/src/auv_controllers
+      - ../../../mobile_to_maritime:/home/ubuntu/ws_blue/src/mobile_to_maritime
       - ../../../blue:/home/ubuntu/ws_blue/src/blue
-    command: tail -f /dev/null
+    # Launch sim directly
+    entrypoint: [ "/bin/bash", "-i", "-c" ]
+    command: [ "ros2 launch blue_demos bluerov2_demo.launch.yaml use_sim:=true" ]
+
+  zenoh:
+    image: eclipse/zenoh-bridge-ros2dds:latest
+    ports:
+      - 7447:7447
+      - 7448:7448
+    environment:
+      ROS_DOMAIN_ID: 0
+      ROS_DISTRO: ${BLUE_ROS_DISTRO}
+
+  foxglove-bridge:
+    image: ghcr.io/apl-ocean-engineering/blue-foxglove-bridge-docker:${BLUE_ROS_DISTRO}
+    ports:
+      - 8765:8765
+

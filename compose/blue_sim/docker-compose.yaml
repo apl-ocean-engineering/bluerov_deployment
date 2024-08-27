@@ -2,6 +2,7 @@ services:
   blue:
     image: ghcr.io/${BLUE_GITHUB_REPO:?Github repo not set}:${BLUE_ROS_DISTRO:-rolling}-desktop
     environment:
+      - ROS_DOMAIN_ID=2
       - DISPLAY=${DISPLAY}
       - XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR}
       - LIBGL_ALWAYS_SOFTWARE=1
@@ -23,9 +24,8 @@ services:
       - ../../../bluerov_deployment:/home/ubuntu/ws_blue/src/bluerov_deployment
       - ../../../auv_controllers:/home/ubuntu/ws_blue/src/auv_controllers
       - ../../../mobile_to_maritime:/home/ubuntu/ws_blue/src/mobile_to_maritime
-      - ../../../blue:/home/ubuntu/ws_blue/src/blue
-    networks:
-      - ros2_backend
+      - ../../../blue-nav2:/home/ubuntu/ws_blue/src/blue
+      - ../../../blue_nav2:/home/ubuntu/ws_blue/src/blue_nav2
     # Launch sim directly
     entrypoint: [ "/bin/bash", "-i", "-c" ]
     command: [ "ros2 launch blue_demos bluerov2_demo.launch.yaml use_sim:=true" ]
