@@ -166,7 +166,7 @@ protocols: [udp, multicast, tcp]
 # Available values are "no", "strict", "optional".
 encryption: "no"
 # Address of the TCP/RTSP listener. This is needed only when encryption is "no" or "optional".
-rtspAddress: :9554
+rtspAddress: :8554
 # Address of the TCP/TLS/RTSPS listener. This is needed only when encryption is "strict" or "optional".
 #rtspsAddress: :8322
 # Address of the UDP/RTP listener. This is needed only when "udp" is in protocols.
@@ -414,13 +414,8 @@ paths:
   bluerov:
     source: rtsp://172.31.12.153:8554/video_stream__dev_video2
     sourceOnDemand: no
-    # If sourceOnDemand is "yes", readers will be put on hold until the source is
-    # ready or until this amount of time has passed.
     sourceOnDemandStartTimeout: 10s
-    # If sourceOnDemand is "yes", the source will be closed when there are no
-    # readers connected and this amount of time has passed.
     sourceOnDemandCloseAfter: 10s
-    # Maximum number of readers. Zero means no limit.
     maxReaders: 0
 
   # Settings under path "all_others" are applied to all paths that
